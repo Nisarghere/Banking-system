@@ -30,11 +30,12 @@ exports.registerUser=async (req, res)=>{
     res.cookie("token", token)
 
     res.status(201).json({
+        message:"User registered successfully",
         user:{
             id:user._id,
             name:user.name,
             email:user.email
-        }
+        },
     })
      await sendRegistrationEmail(user.email, user.name)
 
@@ -69,6 +70,7 @@ exports.loginUser = async (req, res)=>{
     res.cookie("token", token)
 
     res.status(200).json({
+        message:"Login successful",
         id:user._id,
         email:user.email,
         name:user.name

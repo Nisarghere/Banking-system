@@ -50,10 +50,17 @@ const sendRegistrationEmail = async (userEmail, name) => {
       await sendEmail(userEmail, subject, text, html);
   }
 
-const sendTransactionEmail = async (userEmail, name, transactionDetails) => {
+// const sendTransactionEmail = async (userEmail, name, transactionDetails) => {
+//     const subject = 'Transaction Notification';
+//     const text = `Hello ${name},\n\nA transaction has been made on your account:\n\n${transactionDetails}\n\nBest regards,\nThe Backend Ledger Team`;
+//     const html = `<p>Hello ${name},</p><p>A transaction has been made on your account:</p><p>${transactionDetails}</p><p>Best regards,<br>The Backend Ledger Team</p>`;
+
+//     await sendEmail(userEmail, subject, text, html);
+// }
+const sendTransactionEmail = async (userEmail, name, amount, transactionDetails) => {
     const subject = 'Transaction Notification';
-    const text = `Hello ${name},\n\nA transaction has been made on your account:\n\n${transactionDetails}\n\nBest regards,\nThe Backend Ledger Team`;
-    const html = `<p>Hello ${name},</p><p>A transaction has been made on your account:</p><p>${transactionDetails}</p><p>Best regards,<br>The Backend Ledger Team</p>`;
+    const text = `Hello ${name},\n\nA transaction of amount $${amount} has been made on your account:\n\n${transactionDetails}\n\nBest regards,\nThe Backend Ledger Team`;
+    const html = `<p>Hello ${name},</p><p>A transaction of amount <strong>$${amount}</strong> has been made on your account:</p><p>${transactionDetails}</p><p>Best regards,<br>The Backend Ledger Team</p>`;
 
     await sendEmail(userEmail, subject, text, html);
 }

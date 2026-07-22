@@ -25,9 +25,9 @@ const transactionSchema = new mongoose.Schema({
     amount:{
         type:Number,
         required:true,
-        min:[0, "Amount should be greater than or equal to 0"]
+        min:[1, "Amount must be greater than  0"]
     },
-    ideompotencyKey:{
+    idempotencyKey:{
         type:String,
         required:true,
         index:true,

@@ -14,4 +14,12 @@ async function accountController(req, res){
     })
 }
 
-module.exports = {accountController}
+async function getUsersController(req, res){
+    const accounts = await accountModel.find({user:req.user._id})
+
+    res.status(200).json({
+        accounts
+    })
+}
+
+module.exports = {accountController, getUsersController}

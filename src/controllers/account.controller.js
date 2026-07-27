@@ -22,4 +22,26 @@ async function getUsersController(req, res){
     })
 }
 
-module.exports = {accountController, getUsersController}
+async function getAccountBalance(req, res){
+    const { accountId }= req.params
+
+    const account = await accountModel.findOne({
+        _id: accountId,
+        user: req.user._id
+    }) 
+
+    if (!account){
+        return res.status(404).json({
+            message:"Invalid account id"
+        })
+    }
+
+    const balance = await account.getBalance()
+
+    res.status(200).json({
+        accountId:account._id,
+        balance: balance
+    })
+}
+
+module.exports = {accountController, getUsersController, getAccountBalance}

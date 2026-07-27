@@ -1,4 +1,6 @@
+const BlacklistToken = require("../models/blackList.model");
 const userModel = require("../models/users.model");
+
 
 const jwt = require("jsonwebtoken")
 
@@ -6,9 +8,21 @@ const jwt = require("jsonwebtoken")
 async function authMiddleware(req, res, next){
     const token = req.cookies.token || req.headers.authorization?.split(" ")[1]
 
+   
+
     if (!token){
         return res.status(401).json({
             message:"Unauthorized"
+        })
+    }
+
+    const isLoggedOut = await BlacklistToken.findOne({
+        token
+    })
+
+    if (isLoggedOut){
+        return res.status(401).json({
+            message:"Token is invalid"
         })
     }
     try{
@@ -34,6 +48,15 @@ async function systemUserMiddleware(req, res, next){
     if (!token){
         return res.status(401).json({
             message:"Unauthorized"
+        })
+    }
+     const isLoggedOut = await BlacklistToken.findOne({
+        token
+    })
+
+    if (isLoggedOut){
+        return res.status(401).json({
+            message:"Token is invalid"
         })
     }
     try{

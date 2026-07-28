@@ -3,6 +3,7 @@ const ledgerModel = require("../models/ledger.model");
 const accountModel = require("../models/account.model");
 const emailservice = require("../services/email.service");
 const mongoose = require("mongoose");
+const userModel = require("../models/users.model");
 
 async function createTransaction(req, res) {
   const { fromAccount, toAccount, amount, idempotencyKey } = req.body;
@@ -147,9 +148,12 @@ async function createInitialFundsTransaction(req, res) {
     });
   }
 
-  const fromUserAccount = await accountModel.findOne({
-    user:req.user._id
+  const systemuser = await userModel.findOne({
+    systemUser:true,
+    _id:req.user._id
   });
+
+  const fromUserAccount = await accountModel.findOne({user:systemuser._id})
 
   if (!fromUserAccount) {
     return res.status(404).json({

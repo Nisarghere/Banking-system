@@ -14,19 +14,19 @@ async function accountController(req, res){
     })
 }
 
-async function getUsersController(req, res){
-    const accounts = await accountModel.find({user:req.user._id})
+// async function getUsersController(req, res){
+//     const accounts = await accountModel.find({user:req.user._id})
 
-    res.status(200).json({
-        accounts
-    })
-}
+//     res.status(200).json({
+//         accounts
+//     })
+// }
 
 async function getAccountBalance(req, res){
-    const { accountId }= req.params
+    // const { accountId }= req.params
 
     const account = await accountModel.findOne({
-        _id: accountId,
+        // _id: accountId,
         user: req.user._id
     }) 
 
@@ -44,4 +44,4 @@ async function getAccountBalance(req, res){
     })
 }
 
-module.exports = {accountController, getUsersController, getAccountBalance}
+module.exports = {accountController, getAccountBalance}
